@@ -1,0 +1,7 @@
+Generative AI systems produce new content from prompts and context. A reliable application separates prompt construction, provider calls, response validation, and user-facing presentation.
+
+Provider SDKs offer direct access to model features. Framework integrations can add reusable message types, tools, tracing, and orchestration. Neither approach is automatically better; the right choice depends on application complexity and operational needs.
+
+Credentials belong in environment variables or a managed secret store. Source code should remain safe to share and import. Automated tests should use deterministic local data unless a test is explicitly designed and authorized to call an external service.
+
+Retrieval workflows begin with trustworthy documents. Loaders should use repository-relative paths, record the source of each document, and preserve enough metadata to trace an answer back to its evidence.

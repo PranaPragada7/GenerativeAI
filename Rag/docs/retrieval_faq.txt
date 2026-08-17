@@ -1,0 +1,11 @@
+Question: Why keep retrieval tests offline?
+Answer: Offline fixtures make tests fast, repeatable, and independent of provider availability.
+
+Question: What should a document loader return?
+Answer: It should return readable content and enough source metadata to identify where the content came from.
+
+Question: Where should API keys be stored?
+Answer: Store them in environment variables or a managed secret service, never in tracked source files.
+
+Question: When should an application use a framework?
+Answer: Use a framework when its abstractions reduce real complexity, such as tool orchestration, tracing, or provider portability.

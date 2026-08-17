@@ -1,13 +1,24 @@
-from langchain_community.document_loaders import PyPDFLoader
+"""Load text from a repository-local PDF."""
 
-#Load a PDF file and print the number of documents and the first 50 characters of each document
-loader = PyPDFLoader(r"C:\Users\prana\GenAI\Rag\docs\demo_pdf.pdf")
-documents = loader.load()
+from pathlib import Path
 
-#Checking the number of documents
-print("Document Count:", len(documents))
+DEFAULT_PDF = Path(__file__).resolve().parents[1] / "docs" / "generative_ai_course.pdf"
 
-#Print the first 50 characters of each document
-for doc in documents:
-    print(doc.page_content[:50])
-    print("-" * 50)
+
+def load_pdf(path: Path = DEFAULT_PDF) -> list[str]:
+    """Return extracted text for each page in a PDF."""
+    from pypdf import PdfReader
+
+    return [(page.extract_text() or "") for page in PdfReader(path).pages]
+
+
+def main() -> None:
+    pages = load_pdf()
+    print(f"Page count: {len(pages)}")
+    for page in pages:
+        print(page[:80].strip())
+        print("-" * 50)
+
+
+if __name__ == "__main__":
+    main()
