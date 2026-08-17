@@ -1,10 +1,33 @@
-from google import genai
+"""Call Gemini directly with the Google Gen AI SDK."""
 
-client = genai.Client()
+import os
 
-response = client.models.generate_content(
-    model="gemini-2.5-flash",
-    contents="List the top 5 largest cities in the world by population.",
-)
+DEFAULT_PROMPT = "List five of the world's largest cities by population."
 
-print(response.text)
+
+def generate(prompt: str = DEFAULT_PROMPT, model: str | None = None) -> str:
+    """Generate a response with an explicitly configured API key."""
+    from dotenv import load_dotenv
+    from google import genai
+
+    load_dotenv()
+    api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "Set GEMINI_API_KEY or GOOGLE_API_KEY before running this example."
+        )
+
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(
+        model=model or os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+        contents=prompt,
+    )
+    return response.text or ""
+
+
+def main() -> None:
+    print(generate())
+
+
+if __name__ == "__main__":
+    main()

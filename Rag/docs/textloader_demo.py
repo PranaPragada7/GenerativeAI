@@ -1,15 +1,17 @@
-# Load document from Text File
+"""Minimal text-loader example kept beside its sample document."""
 
-from langchain_community.document_loaders.text import TextLoader
+from pathlib import Path
 
-# Load the text file
-loader = TextLoader("./docs/mlk.txt")
-# Load the documents
-docs = loader.load()
-print("Document Count : ", len(docs))
+DOCUMENT = Path(__file__).resolve().with_name("sample_notes.txt")
 
-# Print the loaded documents
-for doc in docs:
-    print('Size : ', len(doc.page_content))
-    print(doc.page_content[:50])  # Print the first 50 characters of each document
+
+def main() -> None:
+    text = DOCUMENT.read_text(encoding="utf-8")
+    print("Document count: 1")
+    print(f"Size: {len(text)}")
+    print(text[:80].strip())
     print("-" * 50)
+
+
+if __name__ == "__main__":
+    main()

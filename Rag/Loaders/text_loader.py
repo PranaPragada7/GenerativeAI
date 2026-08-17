@@ -1,10 +1,21 @@
-from langchain_community.document_loaders import TextLoader
+"""Load a repository-local UTF-8 text document."""
 
-#Load a text file and print the number of documents and the first 50 characters of each document
-loader = TextLoader(r"C:\Users\prana\GenAI\Rag\docs\mlk.txt", encoding="utf-8")
-documents = loader.load()
+from pathlib import Path
 
-print("Document Count:", len(documents))
-for doc in documents:
-    print(doc.page_content[:50])
+DEFAULT_TEXT = Path(__file__).resolve().parents[1] / "docs" / "sample_notes.txt"
+
+
+def load_text(path: Path = DEFAULT_TEXT) -> str:
+    """Return the complete contents of a UTF-8 text file."""
+    return path.read_text(encoding="utf-8")
+
+
+def main() -> None:
+    text = load_text()
+    print("Document count: 1")
+    print(text[:80].strip())
     print("-" * 50)
+
+
+if __name__ == "__main__":
+    main()
