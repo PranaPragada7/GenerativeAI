@@ -1,6 +1,7 @@
 # Generative AI Examples
 
 [![CI](https://github.com/PranaPragada7/GenerativeAI/actions/workflows/ci.yml/badge.svg)](https://github.com/PranaPragada7/GenerativeAI/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-80%25%2B-brightgreen)](#quality-checks)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![LangChain](https://img.shields.io/badge/LangChain-examples-1C3C3C)](https://python.langchain.com/)
 
@@ -80,6 +81,19 @@ Hugging Face examples download model weights the first time they run. The Ollama
 example requires an Ollama service and a locally available model. Hosted Gemini
 examples require `GEMINI_API_KEY` or `GOOGLE_API_KEY`.
 
+## Runtime expectations
+
+| Example type | Network | Additional requirement |
+|---|---:|---|
+| Gemini | Yes | Google API key and available quota |
+| Ollama | No after model setup | Running Ollama service and a local model |
+| Hugging Face pipelines | First run | Model download, disk space, and sufficient memory |
+| Text and PDF loaders | No | Repository sample documents or a local file path |
+
+The pipeline examples are demonstrations rather than production services. Model
+availability, provider quotas, latency, and output quality depend on the local
+environment and external services.
+
 ## Configuration
 
 | Variable | Purpose | Default |
@@ -101,6 +115,10 @@ python -m compileall -q .
 python -m pytest -q
 ```
 
+The test suite uses fakes for hosted providers and model pipelines, so CI never
+uses credentials or downloads model weights. Coverage must remain at or above
+80%.
+
 ## Repository structure
 
 ```text
@@ -111,3 +129,6 @@ tests/                Offline portability and import checks
 .github/workflows/    Automated quality checks
 environment_check.py  Installed-package summary
 ```
+
+See [`CHANGELOG.md`](CHANGELOG.md) for release history and
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines.
