@@ -6,8 +6,6 @@ import os
 def ask(question: str, model: str | None = None) -> str:
     """Return Gemini's answer to one question."""
     from dotenv import load_dotenv
-    from langchain_core.messages import HumanMessage
-    from langchain_google_genai import ChatGoogleGenerativeAI
 
     load_dotenv()
     api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
@@ -15,6 +13,9 @@ def ask(question: str, model: str | None = None) -> str:
         raise RuntimeError(
             "Set GEMINI_API_KEY or GOOGLE_API_KEY before running this example."
         )
+
+    from langchain_core.messages import HumanMessage
+    from langchain_google_genai import ChatGoogleGenerativeAI
 
     chat_model = ChatGoogleGenerativeAI(
         model=model or os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
