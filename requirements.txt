@@ -1,13 +1,13 @@
 # Hosted Gemini and LangChain examples
-google-genai>=1.60,<2
-langchain-core>=1.2,<2
-langchain-google-genai>=4.2,<5
-langchain-ollama>=1,<2
+google-genai>=2.20.0,<3
+langchain-core>=1.6.1,<2
+langchain-google-genai>=4.3.7,<5
+langchain-ollama>=1.1.0,<2
 
 # Local pipelines and document loaders
-transformers>=4.41,<5
-torch>=2.3,<3
-pypdf>=4.2,<6
+transformers>=5.16.1,<6
+torch>=2.13.0,<3
+pypdf>=6.16.2,<7
 
 # Environment loading
-python-dotenv>=1,<2
+python-dotenv>=1.2.3,<2
