@@ -5,7 +5,8 @@ langchain-google-genai>=4.3.7,<5
 langchain-ollama>=1.1.0,<2
 
 # Local pipelines and document loaders
-transformers>=5.16.1,<6
+# The BART example uses the summarization pipeline removed in Transformers 5.
+transformers>=4.41,<5
 torch>=2.13.0,<3
 pypdf>=6.16.2,<7
 
