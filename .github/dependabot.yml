@@ -4,6 +4,11 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
+    # Transformers 5 removed the BART summarization pipeline used by this project.
+    # Remove this range only after migrating the example and runtime check.
+    ignore:
+      - dependency-name: transformers
+        versions: [">=5"]
     groups:
       python-dependencies:
         patterns:
