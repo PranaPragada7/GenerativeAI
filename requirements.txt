@@ -6,7 +6,7 @@ langchain-ollama>=1.1.0,<2
 
 # Local pipelines and document loaders
 # The BART example uses the summarization pipeline removed in Transformers 5.
-transformers>=5.21.1,<6
+transformers>=4.41,<5
 torch>=2.15.0,<3
 pypdf>=6.21.4,<7
 
