@@ -183,17 +183,33 @@ def test_classification_pipelines(monkeypatch, path, task, result):
 def test_summarizer_forwards_generation_limits(monkeypatch):
     calls = {}
 
-    def pipeline(task, **kwargs):
-        calls.update(task=task, **kwargs)
+    class Tokenizer:
+        @classmethod
+        def from_pretrained(cls, model):
+            calls["tokenizer_model"] = model
+            return cls()
 
-        def run(text, **options):
-            calls.update(text=text, options=options)
-            return [{"summary_text": "A concise summary."}]
+        def __call__(self, text, **options):
+            calls.update(text=text, token_options=options)
+            return {"input_ids": [[1, 2]], "attention_mask": [[1, 1]]}
 
-        return run
+        def decode(self, tokens, **options):
+            calls.update(decoded=tokens, decode_options=options)
+            return "A concise summary."
+
+    class Model:
+        @classmethod
+        def from_pretrained(cls, model):
+            calls["model"] = model
+            return cls()
+
+        def generate(self, **options):
+            calls["options"] = options
+            return [[3, 4]]
 
     transformers = ModuleType("transformers")
-    transformers.pipeline = pipeline
+    transformers.AutoTokenizer = Tokenizer
+    transformers.AutoModelForSeq2SeqLM = Model
     monkeypatch.setitem(sys.modules, "transformers", transformers)
 
     example = module("LLMs/Pipelines/text_summarise.py")
@@ -201,12 +217,21 @@ def test_summarizer_forwards_generation_limits(monkeypatch):
     assert example.summarize("Long article", min_length=3, max_length=12) == (
         "A concise summary."
     )
-    assert calls["task"] == "summarization"
+    assert calls["tokenizer_model"] == calls["model"] == "facebook/bart-large-cnn"
+    assert calls["token_options"] == {
+        "return_tensors": "pt",
+        "truncation": True,
+        "max_length": 1024,
+    }
     assert calls["options"] == {
+        "input_ids": [[1, 2]],
+        "attention_mask": [[1, 1]],
         "max_length": 12,
         "min_length": 3,
         "do_sample": False,
     }
+    assert calls["decoded"] == [3, 4]
+    assert calls["decode_options"] == {"skip_special_tokens": True}
 
 
 def test_environment_check_reports_missing_package(monkeypatch, capsys):

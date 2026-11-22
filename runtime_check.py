@@ -6,11 +6,21 @@ def main() -> None:
     from langchain_google_genai import ChatGoogleGenerativeAI
     from langchain_ollama import ChatOllama
     from pypdf import PdfReader
+    from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
     from transformers.pipelines import check_task
 
-    for task in ("summarization", "text-classification", "zero-shot-classification"):
+    for task in ("text-classification", "zero-shot-classification"):
         check_task(task)
-    assert all((genai.Client, ChatGoogleGenerativeAI, ChatOllama, PdfReader))
+    assert all(
+        (
+            genai.Client,
+            ChatGoogleGenerativeAI,
+            ChatOllama,
+            PdfReader,
+            AutoModelForSeq2SeqLM.from_pretrained,
+            AutoTokenizer.from_pretrained,
+        )
+    )
     print("Runtime imports and pipeline tasks are available.")
 
 

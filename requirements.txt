@@ -5,8 +5,9 @@ langchain-google-genai>=4.4.2,<5
 langchain-ollama>=1.1.0,<2
 
 # Local pipelines and document loaders
-# The BART example uses the summarization pipeline removed in Transformers 5.
-transformers>=4.57.6,<5
+# BART uses direct seq2seq generation; legacy summarization pipelines were removed.
+# 5.10 includes fixes for model-loading and tokenizer path-traversal advisories.
+transformers>=5.10.0,<6
 torch>=2.15.0,<3
 pypdf>=6.21.4,<7
 
