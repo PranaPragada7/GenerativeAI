@@ -19,7 +19,7 @@ model work during import.
 | Generation settings | `LLMs/Gemini/parameters.py` | Temperature and output-token controls |
 | Hugging Face | `LLMs/Huggingface_Hub/` | Sentiment and zero-shot classification |
 | Local models | `LLMs/Ollama/llm_chat.py` | Local chat through Ollama |
-| Transformers | `LLMs/Pipelines/text_summarise.py` | Text summarization pipeline |
+| Transformers | `LLMs/Pipelines/text_summarise.py` | Direct BART sequence-to-sequence generation |
 | Document loading | `Rag/Loaders/` | Portable text and PDF loading |
 
 The `Rag/docs/` directory contains small documents used by the loader examples.
